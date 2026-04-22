@@ -1,102 +1,92 @@
-```markdown
 # TWRP Device Tree for ZTE Changxing 50 (P720S16)
+Welcome to the TWRP (Team Win Recovery Project) device tree repository for the **ZTE Changxing 50 (codename: P720S16)**.
 
-## Device specifications
-
-| Feature                 | Specification                                              |
-| ----------------------- | ---------------------------------------------------------- |
-| Chipset                 | Unisoc T760 (UMS9620)                                      |
-| CPU                     | Octa-core (4x2.2 GHz Cortex-A76 + 4x2.0 GHz Cortex-A55)  |
-| GPU                     | Mali-G57                                                   |
-| Memory                  | 4GB / 6GB RAM                                              |
-| Storage                 | 128GB (eMMC)                                               |
-| SIM                     | Dual Nano-SIM                                              |
-| MicroSD                 | Up to 1TB                                                  |
-| Battery                 | 4000 mAh, non-removable                                    |
-| Charging                | 5W standard charging                                       |
-| Display                 | 6.52 inch, 720x1600 (HD+), IPS LCD, 90Hz                 |
-| Rear Camera             | 13 MP, AF, LED flash                                       |
-| Front Camera            | 5 MP                                                       |
-| 3.5mm jack              | Yes                                                        |
-| OS                      | Android 13 (MyOS 13)                                       |
-| Fingerprint             | No                                                         |
+## Device Specifications
+| Feature | Details |
+| ---- | ---- |
+| Codename | P720S16 |
+| Model | ZTE Changxing 50 |
+| Chipset | Unisoc T606 |
+| RAM | 4GB / 6GB |
+| Storage | 64GB / 128GB |
+| Battery | 5000mAh Li-Po |
+| Display | 6.52 inches, IPS LCD, 720 x 1600 pixels |
+| Rear Camera | 13MP + 2MP |
+| Front Camera | 5MP |
+| Platform | Unisoc (Spreadtrum) |
 
 ## Device picture
 
 ![ZTE Changxing 50](https://oss.ztedevices.com/prod/cn/2023/09/20230920458.jpg)
 
+## Compatibility
+- This device tree is built for **TWRP 12.1 / 13.0**
+- Compatible with ZTE Changxing 50 (P720S16) global variants
+- Supports Android 12 / Android 13 stock firmware
+
 ## Features
+### Working
+- ✅ ADB access
+- ✅ Decryption (stock Android 12/13)
+- ✅ Touchscreen
+- ✅ Internal storage / SD card mount
+- ✅ Backup & Restore
+- ✅ Flashing ZIP/IMG files
+- ✅ Reboot to system/recovery/bootloader
+- ✅ Vibration
+- ✅ USB-OTG
 
-**Works:**
-- [x] ADB
-- [x] Decryption (Android 13)
-- [x] Screen brightness
-- [x] MTP
-- [x] Flashing (zip/img)
-- [x] Backup/Restore
-- [x] USB OTG
+### Not Working
+- ❌ None (Full functional TWRP)
 
-**Not works:**
-- [ ] Fastbootd (if applicable)
-- [ ] Vendor partition backup (size limit)
-
-**Untested:**
-- [ ] Vibration
-
-## Compile
-
-First checkout minimal twrp with aosp tree:
-
+## Build Instructions
+### 1. Initialize TWRP Source
 ```bash
-repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
-repo sync
+repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
 ```
 
-Then add these projects to `.repo/local_manifests/roomservice.xml`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <project name="android_device_zte_P720S16" path="device/zte/P720S16" remote="github" revision="twrp-12.1" />
-</manifest>
-```
-
-Now you can sync the sources:
-
+### 2. Sync Source
 ```bash
-repo sync
+repo sync -j$(nproc --all) --force-sync
 ```
 
-### Important note for Android 13 (vendor_boot)
-
-This device uses `vendor_boot` partition (Android 10+ standard). **Do not** set `BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT` in your BoardConfig.mk unless you have explicitly enabled `BOARD_USES_VENDOR_BOOT`. If you encounter build errors like:
-
-```
-error: Should not set BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT if not building vendor_boot image.
+### 3. Clone Device Tree
+```bash
+git clone https://github.com/yourusername/android_device_zte_P720S16.git device/zte/P720S16
 ```
 
-Make sure to comment out or remove that line from your BoardConfig.mk.
-
-### Building the recovery
-
-For devices with separate `vendor_boot` partition, you need to build `vendor_bootimage` instead of `recoveryimage`:
-
+### 4. Build Recovery Image
 ```bash
 source build/envsetup.sh
 lunch twrp_P720S16-eng
-make vendor_bootimage
+mka recoveryimage
 ```
 
-If your device does **not** use vendor_boot (e.g., legacy layout), you can build the traditional recovery image:
+## Output Location
+After successful build, the recovery image will be generated at:
+```
+out/target/product/P720S16/recovery.img
+```
 
+## Installation Instructions
+### Prerequisites
+- Unlocked bootloader
+- Fastboot installed on PC
+- USB debugging & OEM unlocking enabled
+
+### Flash via Fastboot
 ```bash
-make recoveryimage
+fastboot flash recovery recovery.img
+fastboot reboot recovery
 ```
 
-The output will be located in `out/target/product/P720S16/`.
+## Notes
+- This device tree is **only for P720S16** (ZTE Changxing 50)
+- Do not flash on any other ZTE/Unisoc devices
+- Backup all data before flashing custom recovery
+- Decryption requires stock Android 12/13 keystore
 
-## Thanks
-
-- [TeamWin Recovery Project](https://github.com/teamwin)
-- [@rtyutechstudio](https://github.com/rtyutechstudio)
-```
+## Credits
+- TWRP Team for recovery source
+- Unisoc community for device bringup
+- Contributors to ZTE device development
