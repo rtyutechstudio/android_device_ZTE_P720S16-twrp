@@ -27,7 +27,7 @@
 
 ## Features
 
-Works:
+**Works:**
 - [x] ADB
 - [x] Decryption (Android 13)
 - [x] Screen brightness
@@ -36,11 +36,11 @@ Works:
 - [x] Backup/Restore
 - [x] USB OTG
 
-Not works:
+**Not works:**
 - [ ] Fastbootd (if applicable)
 - [ ] Vendor partition backup (size limit)
 
-Untested:
+**Untested:**
 - [ ] Vibration
 
 ## Compile
@@ -52,7 +52,7 @@ repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aos
 repo sync
 ```
 
-Then add these projects to .repo/local_manifests/roomservice.xml:
+Then add these projects to `.repo/local_manifests/roomservice.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -77,10 +77,6 @@ mka recoveryimage
 
 ## Thanks
 
-- teamwin
-- @rtyutechstudio 
+- [TeamWin Recovery Project](https://github.com/teamwin)
+- [@rtyutechstudio](https://github.com/rtyutechstudio)
 ```
-
----
-
-
