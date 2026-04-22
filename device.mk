@@ -85,3 +85,7 @@ PRODUCT_PACKAGES += \
 # Hidl
 PRODUCT_ENFORCE_VINTF_MANIFEST := true 
 
+# OTA Certs
+PRODUCT_EXTRA_RECOVERY_KEYS += \
+    $(LOCAL_PATH)/security/releasekey
+
