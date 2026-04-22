@@ -67,13 +67,33 @@ Now you can sync the sources:
 repo sync
 ```
 
-To build:
+### Important note for Android 13 (vendor_boot)
+
+This device uses `vendor_boot` partition (Android 10+ standard). **Do not** set `BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT` in your BoardConfig.mk unless you have explicitly enabled `BOARD_USES_VENDOR_BOOT`. If you encounter build errors like:
+
+```
+error: Should not set BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT if not building vendor_boot image.
+```
+
+Make sure to comment out or remove that line from your BoardConfig.mk.
+
+### Building the recovery
+
+For devices with separate `vendor_boot` partition, you need to build `vendor_bootimage` instead of `recoveryimage`:
 
 ```bash
 source build/envsetup.sh
 lunch twrp_P720S16-eng
-mka recoveryimage
+make vendor_bootimage
 ```
+
+If your device does **not** use vendor_boot (e.g., legacy layout), you can build the traditional recovery image:
+
+```bash
+make recoveryimage
+```
+
+The output will be located in `out/target/product/P720S16/`.
 
 ## Thanks
 
