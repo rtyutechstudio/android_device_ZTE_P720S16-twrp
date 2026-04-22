@@ -195,9 +195,7 @@ TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 
 # Additional Libraries
 TARGET_RECOVERY_DEVICE_MODULES += libandroidicu
-PRODUCT_COPY_FILES += \
-    $(OUT_DIR)/target/product/$(PRODUCT_DEVICE)/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
-    
+
 #additional lib for fix decryption
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libtrusty \
