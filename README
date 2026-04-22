@@ -1,0 +1,86 @@
+```markdown
+# TWRP Device Tree for ZTE Changxing 50 (P720S16)
+
+## Device specifications
+
+| Feature                 | Specification                                              |
+| ----------------------- | ---------------------------------------------------------- |
+| Chipset                 | Unisoc T760 (UMS9620)                                      |
+| CPU                     | Octa-core (4x2.2 GHz Cortex-A76 + 4x2.0 GHz Cortex-A55)  |
+| GPU                     | Mali-G57                                                   |
+| Memory                  | 4GB / 6GB RAM                                              |
+| Storage                 | 128GB (eMMC)                                               |
+| SIM                     | Dual Nano-SIM                                              |
+| MicroSD                 | Up to 1TB                                                  |
+| Battery                 | 4000 mAh, non-removable                                    |
+| Charging                | 5W standard charging                                       |
+| Display                 | 6.52 inch, 720x1600 (HD+), IPS LCD, 90Hz                 |
+| Rear Camera             | 13 MP, AF, LED flash                                       |
+| Front Camera            | 5 MP                                                       |
+| 3.5mm jack              | Yes                                                        |
+| OS                      | Android 13 (MyOS 13)                                       |
+| Fingerprint             | No                                                         |
+
+## Device picture
+
+![ZTE Changxing 50](https://oss.ztedevices.com/prod/cn/2023/09/20230920458.jpg)
+
+## Features
+
+Works:
+- [x] ADB
+- [x] Decryption (Android 13)
+- [x] Screen brightness
+- [x] MTP
+- [x] Flashing (zip/img)
+- [x] Backup/Restore
+- [x] USB OTG
+
+Not works:
+- [ ] Fastbootd (if applicable)
+- [ ] Vendor partition backup (size limit)
+
+Untested:
+- [ ] Vibration
+
+## Compile
+
+First checkout minimal twrp with aosp tree:
+
+```bash
+repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
+repo sync
+```
+
+Then add these projects to .repo/local_manifests/roomservice.xml:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="android_device_zte_P720S16" path="device/zte/P720S16" remote="github" revision="twrp-12.1" />
+</manifest>
+```
+
+Now you can sync the sources:
+
+```bash
+repo sync
+```
+
+To build:
+
+```bash
+source build/envsetup.sh
+lunch twrp_P720S16-eng
+mka recoveryimage
+```
+
+## Thanks
+
+- teamwin
+- @rtyutechstudio 
+```
+
+---
+
+
