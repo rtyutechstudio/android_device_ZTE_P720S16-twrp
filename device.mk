@@ -43,16 +43,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true    
 
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1
-
-# Health
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-impl.recovery \
-    android.hardware.health@2.1-service
-
 # Boot Control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.1-impl \
@@ -64,14 +54,7 @@ PRODUCT_PACKAGES += \
     bootctrl.default \
     bootctrl.unisoc \
     bootctrl.unisoc.recovery
- 
-PRODUCT_PACKAGES += \
-    otapreopt_script \
-    cppreopts.sh \
-    update_engine \
-    update_verifier \
-    update_engine_sideload \
-    checkpoint_gc 
+
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl    
